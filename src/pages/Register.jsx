@@ -1,9 +1,10 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import useAuthCall from "../hook/useAuthCall";
+import useAuthCall from "../hooks/useAuthCall";
 
 const registerSchema = yup.object().shape({
+  username: yup.string().required("Please enter a username"),
   email: yup
     .string()
     .email("Please enter valid email")
@@ -24,17 +25,17 @@ const Register = () => {
   const { register } = useAuthCall();
   const { handleSubmit, handleChange, values, errors } = useFormik({
     initialValues: {
-      username: "a",
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: "12345678",
-      password2: "12345678",
+      username: "test",
+      first_name: "test",
+      last_name: "test",
+      email: "test@test.com",
+      password: "Test123*",
+      password2: "Test123*",
     },
     validationSchema: registerSchema,
     onSubmit: (values, action) => {
       register(values);
-      // console.log("values", values);
+      console.log("values", values);
       action.resetForm();
     },
   });
@@ -45,6 +46,33 @@ const Register = () => {
         <h1 className="font-bold text-2xl mt-32">Register</h1>
         <div className="flex justify-center p-6 rounded-lg shadow-lg bg-white max-w-md">
           <form onSubmit={handleSubmit}>
+            <div className="form-group mb-6">
+              <input
+                type="text"
+                className="form-control
+      block
+      w-full
+      px-3
+      py-1.5
+      text-base
+      font-normal
+      text-gray-700
+      bg-white bg-clip-padding
+      border border-solid border-gray-300
+      rounded
+      transition
+      ease-in-out
+      m-0
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                id="exampleInput123"
+                aria-describedby="emailHelp123"
+                placeholder="Username"
+                onChange={handleChange}
+                value={values.username}
+                name="username"
+              />
+              <p>{errors.username || ""}</p>
+            </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="form-group mb-6">
                 <input
@@ -98,8 +126,8 @@ const Register = () => {
                   value={values.last_name}
                   name="last_name"
                 />
+                <p>{errors.last_name || ""}</p>
               </div>
-              <p>{errors.last_name || ""}</p>
             </div>
             <div className="form-group mb-6">
               <input
@@ -150,6 +178,31 @@ const Register = () => {
                 name="password"
               />
               <p>{errors.password || ""}</p>
+            </div>
+            <div className="form-group mb-6">
+              <input
+                type="password"
+                className="form-control block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                id="exampleInput126"
+                placeholder="Password2"
+                onChange={handleChange}
+                value={values.password2}
+                name="password2"
+              />
+              <p>{errors.password2 || ""}</p>
             </div>
             <div className="form-group form-check text-center mb-6">
               <input
